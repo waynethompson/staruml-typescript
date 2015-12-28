@@ -1,0 +1,17 @@
+{
+    "name": "staruml.typescript",
+    "title": "TypeScript",
+    "description": "TypeScript code generation and reverse engineering.",
+    "homepage": "https://github.com/waynethompson/staruml-typescript",
+    "keywords": ["typescript"],
+    "version": "0.0.1",
+    "author": {
+        "name": "Wayne Thompson",
+        "email": "wayne_thompson@hotmail.com",
+        "url": "http://waynethompson.com.au"
+    },
+    "license": "MIT",
+    "engines": {
+        "staruml": ">=2.0.0"
+    }
+}
