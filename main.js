@@ -16,15 +16,15 @@ define(function (require, exports, module) {
 
     var CodeGenUtils        = require("CodeGenUtils"),
         TypeScriptPreferences   = require("TypeScriptPreferences"),
-        TypeScriptCodeGenerator = require("TypeScriptCodeGenerator"),
-        TypeScriptReverseEngineer = require("TypeScriptReverseEngineer");
+        TypeScriptCodeGenerator = require("TypeScriptCodeGenerator");//,
+        //TypeScriptReverseEngineer = require("TypeScriptReverseEngineer");
 
     /**
      * Commands IDs
      */
     var CMD_TYPESCRIPT              = "typescript",
         CMD_TYPESCRIPT_GENERATE     = "typescript.generate",
-        CMD_TYPESCRIPT_REVERSE      = "typescript.reverse",
+       // CMD_TYPESCRIPT_REVERSE      = "typescript.reverse",
         CMD_TYPESCRIPT_CONFIGURE    = "typescript.configure";
 
     /**
@@ -99,6 +99,7 @@ define(function (require, exports, module) {
      * @param {Object} options
      * @return {$.Promise}
      */
+	 /*
     function _handleReverse(basePath, options) {
         var result = new $.Deferred();
 
@@ -122,7 +123,7 @@ define(function (require, exports, module) {
         }
         return result.promise();
     }
-
+*/
     function _handleConfigure() {
         CommandManager.execute(Commands.FILE_PREFERENCES, TypeScriptPreferences.getId());
     }
@@ -130,14 +131,14 @@ define(function (require, exports, module) {
     // Register Commands
     CommandManager.register("TypeScript",               CMD_TYPESCRIPT,           CommandManager.doNothing);
     CommandManager.register("Generate Code...", CMD_TYPESCRIPT_GENERATE,  _handleGenerate);
-    CommandManager.register("Reverse Code...",  CMD_TYPESCRIPT_REVERSE,   _handleReverse);
+    //CommandManager.register("Reverse Code...",  CMD_TYPESCRIPT_REVERSE,   _handleReverse);
     CommandManager.register("Configure...",     CMD_TYPESCRIPT_CONFIGURE, _handleConfigure);
 
     var menu, menuItem;
     menu = MenuManager.getMenu(Commands.TOOLS);
     menuItem = menu.addMenuItem(CMD_TYPESCRIPT);
     menuItem.addMenuItem(CMD_TYPESCRIPT_GENERATE);
-    menuItem.addMenuItem(CMD_TYPESCRIPT_REVERSE);
+    //menuItem.addMenuItem(CMD_TYPESCRIPT_REVERSE);
     menuItem.addMenuDivider();
     menuItem.addMenuItem(CMD_TYPESCRIPT_CONFIGURE);
 });
