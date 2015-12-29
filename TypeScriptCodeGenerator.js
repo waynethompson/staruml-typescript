@@ -158,7 +158,7 @@ define(function (require, exports, module) {
             path = _.map(elem._parent.getPath(this.baseModel), function (e) { return e.name; }).join(".");
         }
         if (path) {
-            codeWriter.writeLine("namespace " + path + "{");
+            codeWriter.writeLine("module " + path + "{");
             codeWriter.indent();
         }
         if (writeFunction === "writeAnnotationType") {
@@ -651,15 +651,10 @@ define(function (require, exports, module) {
             }
         }
 
-
         // multiplicity
         if (elem.multiplicity) {
             if (_.contains(["0..*", "1..*", "*"], elem.multiplicity.trim())) {
-                if (elem.isOrdered === true) {
-                    _type = "List<" + _type + ">";
-                } else {
-                    _type = "HashSet<" + _type + ">";
-                }
+                _type = "Array<" + _type + ">";
             } else if (elem.multiplicity !== "1" && elem.multiplicity.match(/^\d+$/)) { // number
                 _type += "[]";
             }
@@ -754,13 +749,13 @@ define(function (require, exports, module) {
     TypeScriptCodeGenerator.prototype.getVisibility = function (elem) {
         switch (elem.visibility) {
         case UML.VK_PUBLIC:
-            return "public";
+            return "";
         case UML.VK_PROTECTED:
             return "protected";
         case UML.VK_PRIVATE:
             return "private";
         }
-        return null;
+        return "";
     };
 
     /**
@@ -774,15 +769,16 @@ define(function (require, exports, module) {
         if (visibility) {
             modifiers.push(visibility);
         }
-        if (elem.isStatic === true) {
-            modifiers.push("static");
-        }
+		
+        //if (elem.isStatic === true) {
+        //    modifiers.push("static");
+        //}
         if (elem.isAbstract === true) {
             modifiers.push("abstract");
         }
-        if (elem.isFinalSpecialization === true || elem.isLeaf === true) {
-            modifiers.push("sealed");
-        }
+        //if (elem.isFinalSpecialization === true || elem.isLeaf === true) {
+        //    modifiers.push("sealed");
+        //}
         return modifiers;
     };
 
