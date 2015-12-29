@@ -637,7 +637,7 @@ define(function (require, exports, module) {
      */
 
     TypeScriptCodeGenerator.prototype.getType = function (elem) {
-        var _type = "void";
+        var _type = "any";
         // type name
         if (elem instanceof type.UMLAssociationEnd) {
             if (elem.reference instanceof type.UMLModelElement && elem.reference.name.length > 0) {
@@ -681,15 +681,19 @@ define(function (require, exports, module) {
             var terms = [];
             // doc
             this.writeDoc(codeWriter, elem.documentation, options);
+			
             // modifiers
             var _modifiers = this.getModifiers(elem);
             if (_modifiers.length > 0) {
                 terms.push(_modifiers.join(" "));
-            }
-            // type
-            terms.push(this.getType(elem));
+            }            
+            
             // name
-            terms.push(elem.name);
+            terms.push(elem.name + ":");
+			
+			// type
+			terms.push(this.getType(elem));
+			
             // initial value
             if (elem.defaultValue && elem.defaultValue.length > 0) {
                 terms.push("= " + elem.defaultValue);
@@ -710,12 +714,13 @@ define(function (require, exports, module) {
             var terms = [];
             // Doc
             this.writeDoc(codeWriter, elem.documentation, options);
+			
             // Visibility
             var visibility = this.getVisibility(elem);
             if (visibility) {
                 terms.push(visibility);
             }
-            terms.push(elem.name + "()");
+            terms.push("constructor()");
             codeWriter.writeLine(terms.join(" ") + " {");
             codeWriter.writeLine("}");
         }
@@ -778,15 +783,6 @@ define(function (require, exports, module) {
         if (elem.isFinalSpecialization === true || elem.isLeaf === true) {
             modifiers.push("sealed");
         }
-        //if (elem.concurrency === UML.CCK_CONCURRENT) {
-            //http://msdn.microsoft.com/ko-kr/library/c5kehkcz.aspx
-            //modifiers.push("synchronized");
-        //}
-        // transient
-        // volatile
-        // strictfp
-        // const
-        // native
         return modifiers;
     };
 
